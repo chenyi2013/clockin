@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
+import step.tracker.stepcounter.walking.clockin.ClockInCompleteActivity
 import step.tracker.stepcounter.walking.clockin.ClockInDetailActivity
 import step.tracker.stepcounter.walking.clockin.ClockInDialog
 
@@ -14,15 +15,23 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         showDialog.setOnClickListener {
-            ClockInDialog(this).show()
+            val dialog =  ClockInDialog(this)
+            dialog.setDialogType(ClockInDialog.TODAY_CLOCK_IN)
+            dialog.show()
         }
 
         showDialogTwo.setOnClickListener {
-            ClockInDialog(this).show()
+            val dialog =  ClockInDialog(this)
+            dialog.setDialogType(ClockInDialog.TOMORROW_CLOCK_IN)
+            dialog.show()
         }
 
         showClockInDetail.setOnClickListener {
             startActivity(Intent(this, ClockInDetailActivity::class.java))
+        }
+
+        showClockInComplete.setOnClickListener{
+            startActivity(Intent(this,ClockInCompleteActivity::class.java))
         }
     }
 }
