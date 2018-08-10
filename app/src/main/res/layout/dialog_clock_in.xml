@@ -3,16 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="20dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:paddingTop="20dp">
+
+    <android.support.constraint.Group
+        android:id="@+id/today_clock_in_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ranking_desc,clock_in_view" />
+
+    <android.support.constraint.Group
+        android:id="@+id/tomorrow_clock_in_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="divider,avatar_1,avatar_2,avatar_3,avatar_4,clock_in_user_count" />
 
     <ImageView
         android:id="@+id/bg_level_3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:src="@drawable/dialog_clockin_shape"
+        android:src="@drawable/dialog_clockin_round_header_bg"
         app:layout_constraintDimensionRatio="316:194"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -55,6 +69,14 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="#ffffff"
+        app:layout_constraintBottom_toBottomOf="@+id/clock_in_btn"
+        app:layout_constraintTop_toTopOf="@+id/desc" />
+
+    <TextView
         android:id="@+id/desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,32 +92,91 @@
         android:textStyle="normal"
         app:layout_constraintTop_toBottomOf="@+id/bg_level_1" />
 
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
+        android:background="#66666666"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc" />
+
+
+    <ImageView
+        android:id="@+id/avatar_4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_steps_per_day_1"
+        android:layout_marginLeft="25dp"
+        app:layout_constraintLeft_toLeftOf="@+id/avatar_3"
+        app:layout_constraintTop_toTopOf="@+id/avatar_1" />
+
+    <ImageView
+        android:id="@+id/avatar_3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_steps_per_day_1"
+        android:layout_marginLeft="25dp"
+        app:layout_constraintLeft_toLeftOf="@+id/avatar_2"
+        app:layout_constraintTop_toTopOf="@+id/avatar_1" />
+
+
+    <ImageView
+        android:id="@+id/avatar_2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_steps_per_day_1"
+        android:layout_marginLeft="25dp"
+        app:layout_constraintLeft_toLeftOf="@+id/avatar_1"
+        app:layout_constraintTop_toTopOf="@+id/avatar_1" />
+
+    <ImageView
+        android:id="@+id/avatar_1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_steps_per_day_1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/clock_in_user_count"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+
+    <TextView
+        android:id="@+id/clock_in_user_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9999 people join"
+        android:layout_marginLeft="75dp"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar_1"
+        app:layout_constraintLeft_toRightOf="@+id/avatar_1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/avatar_1" />
+
+
     <TextView
         android:id="@+id/ranking_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:paddingTop="9dp"
+        android:text="You’re the No.1234 to greet the morning"
+        android:textColor="#000000"
         android:textSize="12sp"
+        android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:fontFamily="sans-serif"
-        app:layout_constraintTop_toBottomOf="@+id/desc"
-        android:textStyle="normal"
-        android:paddingTop="9dp"
-        android:textColor="#000000"
-        android:background="#ffffff"
-        android:gravity="center_horizontal"
-        android:text="You’re the No.1234 to greet the morning" />
+        app:layout_constraintTop_toBottomOf="@+id/avatar_1" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:background="#ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/clock_in_btn"
-        app:layout_constraintTop_toTopOf="@+id/day1" />
 
     <step.tracker.stepcounter.walking.clockin.ClockInView
-        android:id="@+id/day1"
+        android:id="@+id/clock_in_view"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#ffffff"
@@ -125,7 +206,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/day1" />
+        app:layout_constraintTop_toBottomOf="@+id/clock_in_view" />
 
     <TextView
         android:id="@+id/bottom_padding"
@@ -139,9 +220,9 @@
         android:layout_height="35dp"
         android:layout_marginTop="35dp"
         android:src="@drawable/ic_clock_in_close_pop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottom_padding" />
 
 
