@@ -19,7 +19,8 @@ class ClockInView : View {
     private val textPaint: Paint = Paint()
     private val linePaint: Paint = Paint()
 
-    private var bitmap: Bitmap? = null
+    private var achievementBitmap: Bitmap? = null
+    private var achievementSmallBitmap: Bitmap? = null
     private var animation: ValueAnimator? = null
 
     private var selectRadius: Float = 0f
@@ -27,11 +28,16 @@ class ClockInView : View {
     private var scaleFactor: Float = 1f
     private var animationCircleRadiu: Float = 0f
     private var strokeWidth: Float = 5f
+    private var smallBitmapSize: Float = 15f
+    private var smalBitmapBgCircleRadiu = 17f
+    private var bitmapSize: Float = 19f
+    private var currentAnimatorValue = 1f
 
     private var clockInIndex: Int = 0
     private var clockInCompletedCount: Int = 0
     private var clockInTotalCount: Int = 5
     private var completedColor: Int = Color.RED
+    private var unCompleteColor: Int = Color.BLACK
 
     private var isClockInAnimation: Boolean = false
     private var isCompletedTodayClockIn = false
@@ -74,13 +80,16 @@ class ClockInView : View {
     }
 
     private fun startAnimation() {
-        animation = ObjectAnimator.ofFloat(1.2f, 1.4f)
+        animation = ObjectAnimator.ofFloat(1.2f, 1.5f)
         animation?.duration = 1000
         animation?.repeatMode = ValueAnimator.REVERSE
         animation?.repeatCount = ValueAnimator.INFINITE
         animation?.addUpdateListener {
             if (it.animatedValue is Float) {
-                animationCircleRadiu = it.animatedValue as Float * ScreenUtil.dip2px(context, 20f).toFloat()
+
+                currentAnimatorValue = it.animatedValue as Float
+                animationCircleRadiu = currentAnimatorValue * ScreenUtil.dip2px(context, 20f).toFloat()
+
                 invalidate()
             }
 
@@ -132,10 +141,20 @@ class ClockInView : View {
 
 
         completedColor = Color.parseColor("#e78673")
+        unCompleteColor = Color.parseColor("#e0e0e0")
 
+        bitmapSize = ScreenUtil.dip2px(context, 38f).toFloat()
         var icon: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_steps_per_day_1)
         if (icon != null && !icon.isRecycled) {
-            bitmap = Bitmap.createScaledBitmap(icon, ScreenUtil.dip2px(context, 38f), ScreenUtil.dip2px(context, 38f), true)
+            achievementBitmap = Bitmap.createScaledBitmap(icon, bitmapSize.toInt(), bitmapSize.toInt(), true)
+        }
+
+
+        smallBitmapSize = ScreenUtil.dip2px(context, 16f).toFloat()
+        smalBitmapBgCircleRadiu = ScreenUtil.dip2px(context, 9f).toFloat()
+        var smailIcon: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_steps_per_day_1)
+        if (smailIcon != null && !smailIcon.isRecycled) {
+            achievementSmallBitmap = Bitmap.createScaledBitmap(icon, smallBitmapSize.toInt(), smallBitmapSize.toInt(), true)
         }
 
         selectRadius = ScreenUtil.dip2px(context, 20f).toFloat()
@@ -200,7 +219,7 @@ class ClockInView : View {
     private fun startScaleDownAnimation(context: Context) {
 
         this.animation?.cancel()
-        val animation: ValueAnimator = ObjectAnimator.ofFloat(1.2f, 1.6f, 0f)
+        val animation: ValueAnimator = ObjectAnimator.ofFloat(currentAnimatorValue, 1.8f, 0f)
 
         animation.duration = 2000
         animation.repeatCount = 0
@@ -306,17 +325,38 @@ class ClockInView : View {
     private fun drawLastBitmapPoint(index: Int, canvas: Canvas?, startX: Float) {
         if (index == clockInTotalCount - 1) {
 
-            var ringWidth: Int = height / 2 - ScreenUtil.dip2px(context, 38f) / 2
+            var ringWidth: Float = height / 2 - bitmapSize / 2
 
             if (!(isClockInAnimation || isCompletedTodayClockIn) && clockInIndex == index) {
 
-                imgMatrix.setScale(scaleFactor, scaleFactor, (ScreenUtil.dip2px(context, 38f) / 2).toFloat(), (ScreenUtil.dip2px(context, 38f) / 2).toFloat())
-                canvas?.save()
-                canvas?.translate(startX - ScreenUtil.dip2px(context, 38f) / 2, ringWidth.toFloat())
-                canvas?.drawBitmap(bitmap, imgMatrix, circlePaint)
-                canvas?.restore()
+                achievementBitmap?.let {
+                    if (!it.isRecycled) {
+                        imgMatrix.setScale(scaleFactor, scaleFactor, (bitmapSize / 2), (bitmapSize / 2))
+                        canvas?.save()
+                        canvas?.translate(startX - bitmapSize / 2, ringWidth)
+                        canvas?.drawBitmap(achievementBitmap, imgMatrix, circlePaint)
+                        canvas?.restore()
+                    }
+                }
+
             } else if (clockInIndex != index) {
-                canvas?.drawBitmap(bitmap, startX - ScreenUtil.dip2px(context, 38f) / 2, ringWidth.toFloat(), circlePaint)
+
+                achievementBitmap?.let {
+                    if (!it.isRecycled) {
+                        canvas?.drawBitmap(achievementBitmap, startX - bitmapSize / 2, ringWidth, circlePaint)
+                    }
+                }
+
+                achievementSmallBitmap?.let {
+                    if (!it.isRecycled) {
+                        val dx: Float = (startX + radius * Math.cos(Math.toRadians(45.0))).toFloat()
+                        val dy: Float = (height / 2 + radius * Math.sin(Math.toRadians(45.0))).toFloat()
+                        canvas?.drawCircle(dx, dy, smalBitmapBgCircleRadiu, circlePaint)
+                        canvas?.drawBitmap(achievementSmallBitmap, dx - smallBitmapSize / 2, dy - smallBitmapSize / 2, circlePaint)
+                    }
+                }
+
+
             }
 
         }
@@ -349,12 +389,12 @@ class ClockInView : View {
         }
     }
 
-    private fun drawCircles(canvas: Canvas?, startX: Float, i: Int, avgWidth: Int) {
+    private fun drawCircles(canvas: Canvas?, startX: Float, index: Int, avgWidth: Int) {
         canvas?.drawCircle(startX, (height / 2).toFloat(), radius + strokeWidth, fillCirclePaint)
 
 
         fillCirclePaint.color = Color.WHITE
-        if (i == clockInIndex) {
+        if (index == clockInIndex) {
 
             if (!isCompletedTodayClockIn) {
                 canvas?.drawCircle(((avgWidth / 2) + avgWidth * clockInIndex).toFloat(), (height / 2).toFloat(), animationCircleRadiu, animationCirclePaint)
@@ -368,6 +408,7 @@ class ClockInView : View {
     }
 
     private fun setPaintColor(index: Int) {
+
         if (index <= clockInCompletedCount) {
             fillCirclePaint.color = completedColor
             circlePaint.color = completedColor
@@ -375,14 +416,20 @@ class ClockInView : View {
             linePaint.color = completedColor
 
         } else {
-            circlePaint.color = Color.parseColor("#e0e0e0")
-            fillCirclePaint.color = Color.parseColor("#e0e0e0")
-            textPaint.color = Color.parseColor("#e0e0e0")
-            linePaint.color = Color.parseColor("#e0e0e0")
+            circlePaint.color = unCompleteColor
+            fillCirclePaint.color = unCompleteColor
+            textPaint.color = unCompleteColor
+            linePaint.color = unCompleteColor
         }
 
         if (index == clockInIndex) {
-            linePaint.color = Color.parseColor("#e0e0e0")
+            linePaint.color = unCompleteColor
         }
+
+        if (index == clockInTotalCount - 1 && clockInIndex != clockInTotalCount - 1) {
+            fillCirclePaint.color = Color.parseColor("#f8c162")
+            circlePaint.color = Color.parseColor("#f8c162")
+        }
+
     }
 }
