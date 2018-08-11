@@ -13,7 +13,7 @@ class ClockInDialog : Dialog {
 
     constructor(context: Context?, themeResId: Int) : super(context, themeResId) {
         setContentView(R.layout.dialog_clock_in)
-        clock_in_view.setClockInCompletedCount(4)
+        clock_in_view.setClockInCompletedCount(3)
 
     }
 

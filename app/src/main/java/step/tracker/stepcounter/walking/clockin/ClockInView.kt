@@ -17,6 +17,7 @@ class ClockInView : View {
     private val animationCirclePaint: Paint = Paint()
     private val fillCirclePaint: Paint = Paint()
     private val textPaint: Paint = Paint()
+    private val linePaint: Paint = Paint()
 
     private var bitmap: Bitmap? = null
     private var animation: ValueAnimator? = null
@@ -38,6 +39,7 @@ class ClockInView : View {
     private val bufferRect = Rect()
     private val hintClickRect = RectF()
     private var radius: Float = 0f
+    var imgMatrix: Matrix = Matrix()
 
 
     constructor(context: Context) : super(context) {
@@ -122,6 +124,10 @@ class ClockInView : View {
         textPaint.isAntiAlias = true
         textPaint.textAlign = Paint.Align.CENTER
         textPaint.textSize = ScreenUtil.sp2px(context, 17f)
+
+
+        linePaint.isAntiAlias = true
+        linePaint.strokeWidth = strokeWidth
 
 
 
@@ -306,7 +312,7 @@ class ClockInView : View {
 
             if (i < clockInTotalCount - 1) {
 
-                if (i == clockInTotalCount - 3) {
+                if (i == clockInIndex) {
                     circlePaint.color = Color.parseColor("#e0e0e0")
                 }
 
@@ -354,11 +360,21 @@ class ClockInView : View {
 
 
             if (i == clockInTotalCount - 1) {
-                var a: Int = height / 2 - ScreenUtil.dip2px(context, 38f) / 2;
-                canvas?.drawBitmap(bitmap, startX - ScreenUtil.dip2px(context, 38f) / 2, a.toFloat(), circlePaint)
+
+                var a: Int = height / 2 - ScreenUtil.dip2px(context, 38f) / 2
+
+                if (!(isClockInAnimation || isCompletedTodayClockIn) && clockInIndex == i) {
+
+                    imgMatrix.setScale(scaleFactor, scaleFactor, (ScreenUtil.dip2px(context, 38f) / 2).toFloat(), (ScreenUtil.dip2px(context, 38f) / 2).toFloat())
+                    canvas?.save()
+                    canvas?.translate(startX - ScreenUtil.dip2px(context, 38f) / 2, a.toFloat())
+                    canvas?.drawBitmap(bitmap, imgMatrix, circlePaint)
+                    canvas?.restore()
+                } else if (clockInIndex != i) {
+                    canvas?.drawBitmap(bitmap, startX - ScreenUtil.dip2px(context, 38f) / 2, a.toFloat(), circlePaint)
+                }
+
             }
-
-
         }
 
     }
