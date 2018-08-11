@@ -291,91 +291,98 @@ class ClockInView : View {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
         var avgWidth: Int = width / 5
-
         for (i in 0 until clockInTotalCount) {
-
             val startX = ((avgWidth / 2) + avgWidth * i).toFloat()
-
-
-            if (i <= clockInCompletedCount) {
-                fillCirclePaint.color = completedColor
-                circlePaint.color = completedColor
-                textPaint.color = completedColor
-
-            } else {
-                circlePaint.color = Color.parseColor("#e0e0e0")
-                fillCirclePaint.color = Color.parseColor("#e0e0e0")
-                textPaint.color = Color.parseColor("#e0e0e0")
-            }
-
-            if (i < clockInTotalCount - 1) {
-
-                if (i == clockInIndex) {
-                    circlePaint.color = Color.parseColor("#e0e0e0")
-                }
-
-                canvas?.drawLine(startX + radius, (height / 2).toFloat(), startX + avgWidth - radius, (height / 2).toFloat(), circlePaint)
-
-            }
-
-
-            canvas?.drawCircle(startX, (height / 2).toFloat(), radius + strokeWidth, fillCirclePaint)
-
-
-            fillCirclePaint.color = Color.WHITE
-            if (i == clockInIndex) {
-
-                if (!isCompletedTodayClockIn) {
-                    canvas?.drawCircle(((avgWidth / 2) + avgWidth * clockInIndex).toFloat(), (height / 2).toFloat(), animationCircleRadiu, animationCirclePaint)
-                }
-
-                canvas?.drawCircle(startX, (height / 2).toFloat(), selectRadius, fillCirclePaint)
-
-            } else {
-                canvas?.drawCircle(startX, (height / 2).toFloat(), radius, fillCirclePaint)
-            }
-
-
-
-            if (i == clockInIndex) {
-                canvas?.save()
-                canvas?.rotate(rationDegree, startX, (height / 2).toFloat())
-                canvas?.scale(scaleFactor, scaleFactor, startX, (height / 2).toFloat())
-                if (isClockInAnimation || isCompletedTodayClockIn) {
-                    canvas?.drawText("√", startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
-                } else {
-                    canvas?.drawText((i + 1).toString(), startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
-                }
-                canvas?.restore()
-            } else {
-
-                if (clockInCompletedCount >= (i + 1)) {
-                    canvas?.drawText("√", startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
-                } else {
-                    canvas?.drawText((i + 1).toString(), startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
-                }
-            }
-
-
-            if (i == clockInTotalCount - 1) {
-
-                var a: Int = height / 2 - ScreenUtil.dip2px(context, 38f) / 2
-
-                if (!(isClockInAnimation || isCompletedTodayClockIn) && clockInIndex == i) {
-
-                    imgMatrix.setScale(scaleFactor, scaleFactor, (ScreenUtil.dip2px(context, 38f) / 2).toFloat(), (ScreenUtil.dip2px(context, 38f) / 2).toFloat())
-                    canvas?.save()
-                    canvas?.translate(startX - ScreenUtil.dip2px(context, 38f) / 2, a.toFloat())
-                    canvas?.drawBitmap(bitmap, imgMatrix, circlePaint)
-                    canvas?.restore()
-                } else if (clockInIndex != i) {
-                    canvas?.drawBitmap(bitmap, startX - ScreenUtil.dip2px(context, 38f) / 2, a.toFloat(), circlePaint)
-                }
-
-            }
+            setPaintColor(i)
+            drawLine(i, canvas, startX, avgWidth)
+            drawCircles(canvas, startX, i, avgWidth)
+            drawText(i, canvas, startX)
+            drawLastBitmapPoint(i, canvas, startX)
         }
 
+    }
+
+    private fun drawLastBitmapPoint(index: Int, canvas: Canvas?, startX: Float) {
+        if (index == clockInTotalCount - 1) {
+
+            var ringWidth: Int = height / 2 - ScreenUtil.dip2px(context, 38f) / 2
+
+            if (!(isClockInAnimation || isCompletedTodayClockIn) && clockInIndex == index) {
+
+                imgMatrix.setScale(scaleFactor, scaleFactor, (ScreenUtil.dip2px(context, 38f) / 2).toFloat(), (ScreenUtil.dip2px(context, 38f) / 2).toFloat())
+                canvas?.save()
+                canvas?.translate(startX - ScreenUtil.dip2px(context, 38f) / 2, ringWidth.toFloat())
+                canvas?.drawBitmap(bitmap, imgMatrix, circlePaint)
+                canvas?.restore()
+            } else if (clockInIndex != index) {
+                canvas?.drawBitmap(bitmap, startX - ScreenUtil.dip2px(context, 38f) / 2, ringWidth.toFloat(), circlePaint)
+            }
+
+        }
+    }
+
+    private fun drawText(index: Int, canvas: Canvas?, startX: Float) {
+        if (index == clockInIndex) {
+            canvas?.save()
+            canvas?.rotate(rationDegree, startX, (height / 2).toFloat())
+            canvas?.scale(scaleFactor, scaleFactor, startX, (height / 2).toFloat())
+            if (isClockInAnimation || isCompletedTodayClockIn) {
+                canvas?.drawText("√", startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
+            } else {
+                canvas?.drawText((index + 1).toString(), startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
+            }
+            canvas?.restore()
+        } else {
+
+            if (clockInCompletedCount >= (index + 1)) {
+                canvas?.drawText("√", startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
+            } else {
+                canvas?.drawText((index + 1).toString(), startX, (height / 2).toFloat() + getFontHeight(textPaint, "0") / 2, textPaint)
+            }
+        }
+    }
+
+    private fun drawLine(index: Int, canvas: Canvas?, startX: Float, avgWidth: Int) {
+        if (index < clockInTotalCount - 1) {
+            canvas?.drawLine(startX + radius, (height / 2).toFloat(), startX + avgWidth - radius, (height / 2).toFloat(), linePaint)
+        }
+    }
+
+    private fun drawCircles(canvas: Canvas?, startX: Float, i: Int, avgWidth: Int) {
+        canvas?.drawCircle(startX, (height / 2).toFloat(), radius + strokeWidth, fillCirclePaint)
+
+
+        fillCirclePaint.color = Color.WHITE
+        if (i == clockInIndex) {
+
+            if (!isCompletedTodayClockIn) {
+                canvas?.drawCircle(((avgWidth / 2) + avgWidth * clockInIndex).toFloat(), (height / 2).toFloat(), animationCircleRadiu, animationCirclePaint)
+            }
+
+            canvas?.drawCircle(startX, (height / 2).toFloat(), selectRadius, fillCirclePaint)
+
+        } else {
+            canvas?.drawCircle(startX, (height / 2).toFloat(), radius, fillCirclePaint)
+        }
+    }
+
+    private fun setPaintColor(index: Int) {
+        if (index <= clockInCompletedCount) {
+            fillCirclePaint.color = completedColor
+            circlePaint.color = completedColor
+            textPaint.color = completedColor
+            linePaint.color = completedColor
+
+        } else {
+            circlePaint.color = Color.parseColor("#e0e0e0")
+            fillCirclePaint.color = Color.parseColor("#e0e0e0")
+            textPaint.color = Color.parseColor("#e0e0e0")
+            linePaint.color = Color.parseColor("#e0e0e0")
+        }
+
+        if (index == clockInIndex) {
+            linePaint.color = Color.parseColor("#e0e0e0")
+        }
     }
 }
