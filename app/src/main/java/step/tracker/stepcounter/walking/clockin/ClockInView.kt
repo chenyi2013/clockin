@@ -9,6 +9,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.example.chenyi.clockin.R
+import android.media.MediaPlayer
+
 
 class ClockInView : View {
 
@@ -101,6 +103,20 @@ class ClockInView : View {
         this.isCompletedTodayClockIn = isCompletedTodayClockIn
         animation?.cancel()
         invalidate()
+    }
+
+    private fun playAudio() {
+        Thread {
+            try {
+                val player = MediaPlayer.create(context, R.raw.clock_in)
+                player.start()
+                player.setOnCompletionListener {
+                    player.release()
+                }
+            } catch (e: Exception) {
+            }
+        }.start()
+
     }
 
     fun init(context: Context) {
@@ -212,6 +228,7 @@ class ClockInView : View {
 
         })
         animation.start()
+        playAudio()
 
 
     }
@@ -221,7 +238,7 @@ class ClockInView : View {
         this.animation?.cancel()
         val animation: ValueAnimator = ObjectAnimator.ofFloat(currentAnimatorValue, 1.8f, 0f)
 
-        animation.duration = 2000
+        animation.duration = 1000
         animation.repeatCount = 0
 
         animation.addUpdateListener {
