@@ -7,6 +7,18 @@
     android:background="@drawable/dialog_clockin_header_bg"
     tools:context="step.tracker.stepcounter.walking.clockin.ClockInCompleteActivity">
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_clock_dialog_level_2_bg"
+        app:layout_constraintDimensionRatio="360:286"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ImageView
         android:id="@+id/icon_back"
         android:layout_width="wrap_content"
@@ -24,13 +36,13 @@
         android:layout_marginTop="102dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center_horizontal"
+        android:text="Get Up Early Challenge"
         android:textColor="#bf000000"
         android:textSize="14sp"
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Get Up Early Challenge" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/complete"
@@ -38,28 +50,28 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:gravity="center_horizontal"
+        android:text="Complete"
         android:textColor="#cc000000"
         android:textSize="24sp"
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/desc"
-        android:text="Complete" />
+        app:layout_constraintTop_toBottomOf="@+id/desc" />
 
 
     <TextView
         android:id="@+id/ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-medium"
+        android:text="No. 2893"
         android:textColor="#88000000"
         android:textSize="12sp"
-        android:layout_marginTop="5dp"
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/complete"
-        android:text="No. 2893" />
+        app:layout_constraintTop_toBottomOf="@+id/complete" />
 
 
     <ImageView
@@ -80,13 +92,13 @@
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="0sp"
+        android:text="Pefect Morning"
         android:textColor="#713858"
         android:textSize="20sp"
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        android:text="Pefect Morning" />
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <TextView
         android:id="@+id/clock_in_day_count"
@@ -94,13 +106,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
+        android:text="Get up early 5 days"
         android:textColor="#8c000000"
         android:textSize="12sp"
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pefect_morning"
-        android:text="Get up early 5 days" />
+        app:layout_constraintTop_toBottomOf="@+id/pefect_morning" />
 
 
     <TextView
@@ -110,6 +122,7 @@
         android:layout_marginBottom="19dp"
         android:fontFamily="sans-serif"
         android:gravity="center_horizontal"
+        android:text="Share to friends"
         android:textColor="#8c000000"
         android:textSize="12sp"
         android:textStyle="normal"
@@ -117,8 +130,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clock_in_day_count"
-        app:layout_constraintVertical_bias="1"
-        android:text="Share to friends" />
+        app:layout_constraintVertical_bias="1" />
 
     <View
         android:layout_width="0dp"
