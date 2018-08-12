@@ -50,6 +50,9 @@ class ClockInView : View {
     var imgMatrix: Matrix = Matrix()
 
 
+    private var onClickClockInListener: OnClickClockInListener? = null
+
+
     constructor(context: Context) : super(context) {
 
         init(context)
@@ -61,6 +64,10 @@ class ClockInView : View {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(context)
+    }
+
+    fun setOnClickClockInListener(onClickClockInListener: OnClickClockInListener?) {
+        this.onClickClockInListener = onClickClockInListener
     }
 
     fun setClockInTotalCount(clockInTotalCount: Int) {
@@ -228,8 +235,8 @@ class ClockInView : View {
 
         })
         animation.start()
+        onClickClockInListener?.onClickClockIn(clockInIndex)
         playAudio()
-
 
     }
 

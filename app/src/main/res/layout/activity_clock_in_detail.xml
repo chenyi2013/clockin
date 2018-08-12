@@ -1,148 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    tools:context="step.tracker.stepcounter.walking.clockin.ClockInDetailActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <ImageView
+        android:id="@+id/bg_level_3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="step.tracker.stepcounter.walking.clockin.ClockInDetailActivity">
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/dialog_clockin_header_bg"
+        app:layout_constraintDimensionRatio="360:286"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/bg_level_3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/dialog_clockin_header_bg"
-            app:layout_constraintDimensionRatio="360:286"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/bg_level_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_clock_dialog_level_2_bg"
+        app:layout_constraintDimensionRatio="360:286"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/bg_level_2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_clock_dialog_level_2_bg"
-            app:layout_constraintDimensionRatio="360:286"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/bg_level_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/ic_clock_dialog_level_1_bg"
+        app:layout_constraintDimensionRatio="360:286"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/bg_level_1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="fitEnd"
-            android:src="@drawable/ic_clock_dialog_level_1_bg"
-            app:layout_constraintDimensionRatio="360:286"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="24dp"
+        android:fontFamily="sans-serif-black"
+        android:lineSpacingExtra="8sp"
+        android:text="Get Up Early Challenge"
+        android:textColor="#4a1b0a"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_level_1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+    <ViewSwitcher
+        android:id="@+id/desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:inAnimation="@anim/vertical_in"
+        android:outAnimation="@anim/vertical_out"
+        android:paddingTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/bg_level_1">
 
         <TextView
-            android:layout_width="161dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_marginLeft="24dp"
-            android:fontFamily="sans-serif-black"
-            android:lineSpacingExtra="8sp"
-            android:text="Get Up Early Challenge"
-            android:textColor="#4a1b0a"
-            android:textSize="24sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@+id/bg_level_1"
-            app:layout_constraintLeft_toLeftOf="parent" />
-
-
-        <TextView
-            android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:fontFamily="sans-serif"
             android:lineSpacingExtra="8sp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
-            android:paddingTop="20dp"
             android:text="It’s time to take the first step to the great achievement!"
             android:textColor="#000000"
             android:textSize="16sp"
-            android:textStyle="normal"
-            app:layout_constraintTop_toBottomOf="@+id/bg_level_1" />
+            android:textStyle="normal" />
 
-
-        <TextView
-            android:id="@+id/ranking_desc"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal"
-            android:paddingTop="9dp"
-            android:text="You’re the No.1234 to greet the morning"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/desc" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="8sp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="Well done, you had Clocked-in Today"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="normal" />
 
 
-        <step.tracker.stepcounter.walking.clockin.ClockInView
-            android:id="@+id/clock_in_view"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:gravity="center"
-            android:text="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ranking_desc" />
+            <TextView
+                android:id="@+id/ranking_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal"
+                android:paddingTop="9dp"
+                android:text="You’re the No.1234 to greet the morning"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/avatar_1" />
+
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/clock_in_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="27dp"
-            android:background="@drawable/dialog_clockin_btn_bg"
-            android:fontFamily="sans-serif"
-            android:gravity="center_horizontal"
-            android:paddingBottom="16dp"
-            android:paddingLeft="98dp"
-            android:paddingRight="98dp"
-            android:paddingTop="16dp"
-            android:text="I’m Awake"
-            android:textColor="#ffffff"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/notify_me"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clock_in_view"
-            app:layout_constraintVertical_chainStyle="packed" />
+    </ViewSwitcher>
 
 
-        <TextView
-            android:id="@+id/notify_me"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Notify me at 8:30 am"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clock_in_btn" />
+    <step.tracker.stepcounter.walking.clockin.ClockInView
+        android:id="@+id/clock_in_view"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/desc" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/clock_in_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/dialog_clockin_btn_bg"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:paddingBottom="16dp"
+        android:paddingLeft="98dp"
+        android:paddingRight="98dp"
+        android:paddingTop="16dp"
+        android:text="I’m Awake"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/notify_me"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clock_in_view"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-</android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/notify_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Notify me at 8:30 am"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clock_in_btn"
+        app:layout_constraintVertical_bias="1" />
+
+
+</android.support.constraint.ConstraintLayout>
+

@@ -14,6 +14,11 @@ class ClockInDialog : Dialog {
     constructor(context: Context?, themeResId: Int) : super(context, themeResId) {
         setContentView(R.layout.dialog_clock_in)
         clock_in_view.setClockInCompletedCount(0)
+        clock_in_view.setOnClickClockInListener(object : OnClickClockInListener {
+            override fun onClickClockIn(index: Int) {
+                desc.showNext()
+            }
+        })
 
     }
 

@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/showDialog"
         android:layout_width="180dp"
